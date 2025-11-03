@@ -19,20 +19,31 @@ def load_image(path):
 
 def read_annotations(txt_path):
     """
-    Parse annotation file lines. Works with 5-field or 8-field formats.
-    Returns boxes (Nx4) and labels (N,).
+    Parse VIRAT-style annotation file:
+    class_id track_id frame x y w h confidence
     """
     boxes, labels = [], []
     with open(txt_path) as f:
         for line in f:
-            vals = [float(v) for v in line.split()]
-            if len(vals) < 5:
+            vals = line.strip().split()
+            if len(vals) < 7:
                 continue
-            cls = int(vals[0])
-            x1, y1, x2, y2 = vals[-4:]
+            try:
+                cls = int(vals[0])
+                x = float(vals[3])
+                y = float(vals[4])
+                w = float(vals[5])
+                h = float(vals[6])
+            except ValueError:
+                continue  # skip malformed rows (e.g., if last field has %)
+
+            x1, y1 = x, y
+            x2, y2 = x + w, y + h
+
             if x2 > x1 and y2 > y1:
                 boxes.append([x1, y1, x2, y2])
                 labels.append(cls)
+
     return np.array(boxes, dtype=float), np.array(labels, dtype=int)
 
 def filter_small(boxes, labels, img_shape, min_frac=2e-4):
