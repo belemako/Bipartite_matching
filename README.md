@@ -40,3 +40,8 @@ data/Pair_S_000001_3563_3623/S_000001_frame_3563.png,data/Pair_S_000001_3563_362
 ```
 
 Iterating through this file line-by-line should simplify the data loading process.
+
+
+## How to run 
+
+python -m src.main
