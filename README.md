@@ -1,3 +1,22 @@
+### Bipartite Matching 
+
+## Goal / Overview
+
+This project implements bipartite object matching for sequential frame analysis on image dataset.
+The primary goal is to establish correspondences between objects detected in consecutive frames based on similarity metrics such as Intersection over Union (IoU), distance, and class consistency.
+
+A Hungarian algorithm is used to optimally solve the bipartite matching problem, ensuring each detected object in one frame is assigned to at most one object in the next frame with minimal overall cost. This framework serves as a foundational step for building object tracking systems or evaluating detection consistency image frames.
+
+Key components:
+
+Cost Matrix Construction: Combines geometric and semantic similarity terms.
+
+Hungarian Matching: Finds optimal one-to-one associations.
+
+Visualization: Matched pairs are drawn with consistent colors across frames.
+
+Evaluation & Gating: Uses IoU thresholds to filter unreliable matches.
+
 ## Data Organization
 
 All data are stored in the `data/` folder, the organization is as follows:
